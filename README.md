@@ -37,68 +37,6 @@ Demonstrar na prática como isolar o domínio da aplicação das tecnologias ext
 | **Lombok** | - | Código boilerplate |
 | **MapStruct** | 1.5.2 | Mapeamento DTO/Entity |
 | **ArchUnit** | 1.2.1 | Testes de Arquitetura |
-
-## 📁 Estrutura do Projeto
-src/
-├── main/
-│ ├── java/
-│ │ └── com.arthurbarbosa.hexagonal/
-│ │ │
-│ │ ├── HexagonalApplication.java # Main class
-│ │ │
-│ │ ├── adapters/ # Adapters Layer
-│ │ │ ├── in/ # Driving Adapters (input)
-│ │ │ │ ├── consumer/ # Kafka consumers
-│ │ │ │ │ └── CustomerConsumer.java
-│ │ │ │ └── controller/ # REST controllers
-│ │ │ │ └── CustomerController.java
-│ │ │ │
-│ │ │ └── out/ # Driven Adapters (output)
-│ │ │ ├── client/ # HTTP Clients (Feign)
-│ │ │ │ └── FindAddressByZipCodeClient.java
-│ │ │ ├── mapper/ # DTO mappers
-│ │ │ │ └── AddressResponseMapper.java
-│ │ │ └── repository/ # JPA/MongoDB repositories
-│ │ │ └── CustomerRepository.java
-│ │ │
-│ │ ├── application/ # Application Layer
-│ │ │ └── service/ # Use case implementations
-│ │ │ └── CustomerService.java
-│ │ │
-│ │ ├── config/ # Spring Configuration
-│ │ │ ├── FeignConfig.java
-│ │ │ ├── KafkaConfig.java
-│ │ │ └── MongoConfig.java
-│ │ │
-│ │ └── core/ # Core/Domain Layer
-│ │ ├── domain/ # Domain Entities
-│ │ │ ├── Address.java
-│ │ │ └── Customer.java
-│ │ │
-│ │ ├── usecase/ # Business use cases
-│ │ │ ├── InsertCustomerUseCase.java
-│ │ │ └── ports/ # Ports (interfaces)
-│ │ │ ├── in/ # Input ports
-│ │ │ │ └── InsertCustomerInputPort.java
-│ │ │ └── out/ # Output ports
-│ │ │ ├── FindAddressByZipCodeOutputPort.java
-│ │ │ └── InsertCustomerOutputPort.java
-│ │ │
-│ │ └── exceptions/ # Domain exceptions
-│ │ └── BusinessException.java
-│ │
-│ └── resources/
-│ ├── application.yaml # Main configuration
-│ └── application-dev.yaml # Dev profile
-│
-└── test/ # Testes
-├── java/
-│ └── com.arthurbarbosa.hexagonal/
-│ ├── unit/ # Unit tests
-│ ├── integration/ # Integration tests
-│ └── architecture/ # ArchUnit tests
-└── resources/
-
 ## 🔧 Configuração da Aplicação
 
 ### application.yaml
