@@ -8,78 +8,21 @@ Projeto demonstrando a implementação da **Arquitetura Hexagonal** (Ports & Ada
 
 Demonstrar na prática como isolar o domínio da aplicação das tecnologias externas (banco de dados, mensageria, APIs externas), tornando o sistema mais testável, manutenível e adaptável a mudanças.
 
-## 🏗️ Arquitetura Hexagonal
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                         MUNDO EXTERNO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    │              │              │              │
-    ▼              ▼              ▼              ▼
-┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
-│  HTTP   │  │  Kafka  │  │ MongoDB │  │  APIs   │
-│   REST  │  │         │  │         │  │ Externas│
-└────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘
-     │            │            │            │
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                    DRIVING ADAPTERS (INPUT)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-     │            │            │            │
-     ▼            ▼            ▼            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  Controller (REST)  │  Consumer (Kafka)  │  Outros Adapters...  │
-└─────────────────────────────┬───────────────────────────────────┘
-                              │
-                              ▼
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                       APPLICATION LAYER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                              │
-                              ▼
-              ┌─────────────────────────────┐
-              │     Use Case (Service)       │
-              │  InsertCustomerUseCase       │
-              └──────────────┬──────────────┘
-                              │
-                              ▼
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                         CORE / DOMAIN
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   Entities    │    │ Value Objects │    │  Exceptions   │
-│               │    │               │    │               │
-│ - Customer    │    │ - Zipcode     │    │ - Business    │
-│ - Address     │    │ - Email       │    │   Exception   │
-└───────────────┘    └───────────────┘    └───────────────┘
-        │                     │                     │
-        └─────────────────────┼─────────────────────┘
-                              │
-                              ▼
-              ┌─────────────────────────────┐
-              │     PORTS (Interfaces)       │
-              ├─────────────────────────────┤
-              │  IN (Driving Ports)          │
-              │  • InsertCustomerInputPort   │
-              ├─────────────────────────────┤
-              │  OUT (Driven Ports)          │
-              │  • FindAddressOutputPort     │
-              │  • InsertCustomerOutputPort  │
-              └─────────────────────────────┘
-                              │
-                              ▼
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                    DRIVEN ADAPTERS (OUTPUT)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│  Repository   │    │    Client     │    │    Mapper     │
-│   Adapter     │    │   Adapter     │    │   Adapter     │
-│               │    │               │    │               │
-│  (MongoDB)    │    │   (Feign)     │    │  (MapStruct)  │
-└───────────────┘    └───────────────┘    └───────────────┘
+## 🏗️ Arquitetura Hexagonal - Conceitos
+
+* **Port (Porta)**: interface que define o limite entre a lógica da aplicação e os detalhes de implementação.
+
+* **Adapter (Adaptador)**: implementação da porta que conecta o domínio da aplicação com o contexto do sistema (banco de dados, APIs externas, etc.).
+
+* **Domain (Domínio)**: contém a lógica de negócio da aplicação e as entidades do modelo.
+
+* **Service (Serviço)**: implementa operações agrupadas por um tópico em comum. Geralmente chama as portas de saída (driven ports).
+
+* **UseCase/Case (Caso de Uso)**: serviço de operação única (funcionalidades isoladas). Pode coexistir com Services.
+
+* **Output/Driven Adapter (Adaptador de Saída)**: implementação das portas chamadas pelo domínio. Ex: Repository, Kafka Producer, Feign Client.
+
+* **Input/Driver Adapter (Adaptador de Entrada)**: comandos que chamam a lógica da aplicação (não exigem uma porta). Ex: Controller REST, Kafka Consumer.
 
 ## 📦 Tecnologias Utilizadas
 
