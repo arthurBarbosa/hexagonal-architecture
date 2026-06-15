@@ -9,4 +9,5 @@ public interface CustomerEntityMapper {
 
     CustomerEntity toCustomerEntity(Customer customer);
 
+    Customer toCustomer(CustomerEntity customerEntity);
 }

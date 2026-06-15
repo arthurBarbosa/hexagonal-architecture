@@ -2,8 +2,7 @@ package com.arthurbarbosa.hexagonal.application.ports.in;
 
 import com.arthurbarbosa.hexagonal.application.core.domain.Customer;
 
-public interface InsertCustomerInputPort {
+public interface FindCustomerByIdInputPort {
 
-    void insert(Customer customer, String zipCode);
-
+    Customer findById(String id);
 }
