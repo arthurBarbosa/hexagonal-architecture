@@ -3,6 +3,7 @@ package com.arthurbarbosa.hexagonal.adapters.in.controller;
 import com.arthurbarbosa.hexagonal.adapters.in.controller.mapper.CustomerMapper;
 import com.arthurbarbosa.hexagonal.adapters.in.controller.request.CustomerRequest;
 import com.arthurbarbosa.hexagonal.adapters.in.controller.response.CustomerResponse;
+import com.arthurbarbosa.hexagonal.application.ports.in.DeleteCustomerByIdInputPort;
 import com.arthurbarbosa.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.arthurbarbosa.hexagonal.application.ports.in.InsertCustomerInputPort;
 import com.arthurbarbosa.hexagonal.application.ports.in.UpdateCustomerInputPort;
@@ -18,26 +19,27 @@ public class CustomerController extends BaseController {
     private final InsertCustomerInputPort insertCustomerInputPort;
     private final FindCustomerByIdInputPort findCustomerByIdInputPort;
     private final UpdateCustomerInputPort updateCustomerInputPort;
+    private final DeleteCustomerByIdInputPort deleteCustomerByIdInputPort;
     private final CustomerMapper customerMapper;
 
     public CustomerController(
             InsertCustomerInputPort insertCustomerInputPort,
             FindCustomerByIdInputPort findCustomerByIdInputPort,
             UpdateCustomerInputPort updateCustomerInputPort,
+            DeleteCustomerByIdInputPort deleteCustomerByIdInputPort,
             CustomerMapper customerMapper
     ) {
         this.insertCustomerInputPort = insertCustomerInputPort;
         this.findCustomerByIdInputPort = findCustomerByIdInputPort;
         this.updateCustomerInputPort = updateCustomerInputPort;
+        this.deleteCustomerByIdInputPort = deleteCustomerByIdInputPort;
         this.customerMapper = customerMapper;
     }
 
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest request) {
-
         final var customer = customerMapper.toCustomer(request);
         insertCustomerInputPort.insert(customer, request.getZipCode());
-
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -53,6 +55,12 @@ public class CustomerController extends BaseController {
         var customer = customerMapper.toCustomer(request);
         customer.setId(id);
         updateCustomerInputPort.update(customer, request.getZipCode());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id) {
+        deleteCustomerByIdInputPort.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
