@@ -1,18 +1,25 @@
 package com.arthurbarbosa.hexagonal.application.core.usecase;
 
+
 import com.arthurbarbosa.hexagonal.application.core.domain.Customer;
 import com.arthurbarbosa.hexagonal.application.ports.in.InsertCustomerInputPort;
-import com.arthurbarbosa.hexagonal.application.ports.out.FindAddressByZipCodeOutputPort;
+import com.arthurbarbosa.hexagonal.application.ports.out.FindAddressByZipCodeOutPutPort;
 import com.arthurbarbosa.hexagonal.application.ports.out.InsertCustomerOutputPort;
 import com.arthurbarbosa.hexagonal.application.ports.out.SendCpfForValidationOutputPort;
 
 public class InsertCustomerUseCase implements InsertCustomerInputPort {
 
-    private final FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort;
+    private final FindAddressByZipCodeOutPutPort findAddressByZipCodeOutputPort;
+
     private final InsertCustomerOutputPort insertCustomerOutputPort;
+
     private final SendCpfForValidationOutputPort sendCpfForValidationOutputPort;
 
-    public InsertCustomerUseCase(FindAddressByZipCodeOutputPort findAddressByZipCodeOutputPort, InsertCustomerOutputPort insertCustomerOutputPort, SendCpfForValidationOutputPort sendCpfForValidationOutputPort) {
+    public InsertCustomerUseCase(
+            FindAddressByZipCodeOutPutPort findAddressByZipCodeOutputPort,
+            InsertCustomerOutputPort insertCustomerOutputPort,
+            SendCpfForValidationOutputPort sendCpfForValidationOutputPort
+    ) {
         this.findAddressByZipCodeOutputPort = findAddressByZipCodeOutputPort;
         this.insertCustomerOutputPort = insertCustomerOutputPort;
         this.sendCpfForValidationOutputPort = sendCpfForValidationOutputPort;
@@ -25,4 +32,5 @@ public class InsertCustomerUseCase implements InsertCustomerInputPort {
         insertCustomerOutputPort.insert(customer);
         sendCpfForValidationOutputPort.send(customer.getCpf());
     }
+
 }

@@ -4,6 +4,7 @@ import com.arthurbarbosa.hexagonal.adapters.out.client.FindAddressByZipCodeClien
 import com.arthurbarbosa.hexagonal.adapters.out.client.mapper.AddressResponseMapper;
 import com.arthurbarbosa.hexagonal.application.core.domain.Address;
 import com.arthurbarbosa.hexagonal.application.ports.out.FindAddressByZipCodeOutPutPort;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,8 +22,9 @@ public class FindAddressByZipCodeAdapter implements FindAddressByZipCodeOutPutPo
     }
 
     @Override
-    public Address find(String zipCode) {
-        var addressResponse = findAddressByZipCodeClient.find(zipCode);
+    public Address find(String zipcode) {
+        var addressResponse = findAddressByZipCodeClient.find(zipcode);
         return addressResponseMapper.toAddress(addressResponse);
     }
+
 }

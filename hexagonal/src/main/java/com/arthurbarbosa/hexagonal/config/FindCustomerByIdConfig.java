@@ -1,6 +1,6 @@
 package com.arthurbarbosa.hexagonal.config;
 
-import com.arthurbarbosa.hexagonal.adapters.out.repository.FindCustomerByIdAdapter;
+import com.arthurbarbosa.hexagonal.adapters.out.FindCustomerByIdAdapter;
 import com.arthurbarbosa.hexagonal.application.core.usecase.FindCustomerByIdUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

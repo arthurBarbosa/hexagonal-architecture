@@ -1,6 +1,5 @@
 package com.arthurbarbosa.hexagonal.application.core.usecase;
 
-import com.arthurbarbosa.hexagonal.application.core.domain.Address;
 import com.arthurbarbosa.hexagonal.application.core.domain.Customer;
 import com.arthurbarbosa.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.arthurbarbosa.hexagonal.application.ports.in.UpdateCustomerInputPort;
